@@ -4,7 +4,8 @@ import matplotlib.patches as patches
 
 # fig, ax = plt.subplots()
 # plt.figure(figsize=(6, 6.5))
-
+# 设置图像比例
+plt.figure(figsize=(5, 5))
 ax = plt.gca()
 
 outer_origin_x = 0
@@ -13,6 +14,14 @@ label_span = 0.05
 
 
 def draw_outer(outer_origin_x, outer_origin_y, outer_x, outer_y):
+    """
+    绘制外框
+    :param outer_origin_x: 外框左下角x坐标
+    :param outer_origin_y: 外框左下角y坐标
+    :param outer_x: 外框宽度
+    :param outer_y: 外框高度
+    :return:
+    """
     outer_origin_x = outer_origin_x
     outer_origin_y = outer_origin_y
     outer_x = outer_x
@@ -42,6 +51,18 @@ def draw_outer(outer_origin_x, outer_origin_y, outer_x, outer_y):
 
 
 def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_y, inner_type, inner_offset=None):
+    """
+    绘制内框
+    :param outer_origin_x: 外框的左下角x
+    :param outer_origin_y: 外框恩左下角y
+    :param outer_x: 外框宽度
+    :param outer_y: 外框高度
+    :param inner_x: 内框宽度
+    :param inner_y: 内框高度
+    :param inner_type: 内框类型
+    :param inner_offset: 内框距离边界
+    :return:
+    """
     label_offset = False
     outer_x = outer_x / 100
     outer_y = outer_y / 100
@@ -76,7 +97,7 @@ def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_
             label_offset = True
         inner_origin_x = 0
         p_inner_x = inner_origin_x + inner_x / 2
-        p_inner_y = inner_origin_y + label_span
+        p_inner_y = inner_origin_y + inner_y / 2
         p_label_x = inner_origin_x - label_span
         p_label_y = outer_origin_y + inner_offset / 2
         print('p_label_y:', p_label_y)
@@ -91,8 +112,8 @@ def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_
             inner_origin_y = outer_origin_y + inner_offset
             label_offset = True
         p_inner_x = inner_origin_x + inner_x / 2
-        p_inner_x = outer_origin_x + outer_x - label_span
-        print('p_inner_x:', p_inner_x)
+        p_inner_y = inner_origin_y + inner_y / 2
+        print('p_inner_y:', p_inner_y)
 #         p_inner_y = inner_origin_y + inner_y / 2 + label_span
         p_label_x = outer_origin_x + outer_x - label_span
         p_label_y = outer_origin_y + inner_offset / 2
@@ -123,8 +144,6 @@ def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_
     rect1.set_clip_on(False)
     ax.add_patch(rect1)
 
-#     p_inner_x = inner_origin_x + inner_x / 2
-#     p_inner_y = inner_origin_y + inner_y / 2
     ax.text(p_inner_x, inner_origin_y + label_span, inner_x * 100,
             horizontalalignment='left',
             verticalalignment='top',
@@ -148,17 +167,26 @@ def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_
 # draw_inner(50, 25, 2)
 
 
-plt.title('Black180', loc='left', y=-0.1)
-draw_outer(0, 0, 200, 50)
-draw_inner(0, 0, 200, 50, 100, 25, 4, 15)
-draw_outer(2.1, -0, 60, 70)
-draw_inner(2.1, -0, 60, 70, 30, 20, 5)
+plt.title('Black180', loc='left')
+# draw_outer(0, 0, 200, 50)
+# draw_inner(0, 0, 200, 50, 100, 25, 4, 15)
+# draw_outer(2.1, -0, 60, 70)
+# draw_inner(2.1, -0, 60, 70, 30, 20, 5)
 
-draw_outer(2.9, -0, 70, 80)
-draw_inner(2.9, -0, 70, 80, 30, 20, 5)
+# draw_outer(2.9, -0, 70, 80)
+# draw_inner(2.9, -0, 70, 80, 30, 20, 5)
 
-draw_outer(0, -2.5, 60, 120)
-draw_inner(0, -2.5, 60, 120, 30, 20, 2)
+# draw_outer(0, -1.3, 60, 120)
+# draw_inner(0, -1.3, 60, 120, 30, 20, 2)
+
+# draw_outer(0, -1.9, 60, 60)
+# draw_inner(0, -1.9, 60, 60, 30, 20, 2)
+
+# draw_outer(0, -2.6, 60, 60)
+# draw_inner(0, -2.6, 60, 60, 30, 20, 2)
+
+draw_outer(0, -0, 60, 60)
+draw_inner(0, -0, 60, 60, 30, 20, 2, 10)
 plt.axis('equal')
 plt.axis('off')
 # plt.gcf().set_size_inches(20, 20)
@@ -167,5 +195,5 @@ plt.axis('off')
 # plt.subplots_adjust(top=0.5, bottom=0.1, right=0.3, left=0.1, hspace=0.2, wspace=0.2)
 # plt.margins(0, 0)
 # plt.savefig('./test2.jpg', dpi=100, bbox_inches='tight')
-plt.savefig('./test2.jpg', dpi=100, bbox_inches='tight')
-# plt.show()
+# plt.savefig('./test2.jpg', dpi=100, bbox_inches='tight')
+plt.show()
