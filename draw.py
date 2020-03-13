@@ -2,6 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+from op import OPMysql
+
+op = OPMysql('127.0.0.1', 3306, 'root', 'root')
+
+
 # fig, ax = plt.subplots()
 # plt.figure(figsize=(6, 6.5))
 # 设置图像比例
@@ -167,7 +172,8 @@ def draw_inner(outer_origin_x, outer_origin_y, outer_x, outer_y, inner_x, inner_
 # draw_inner(50, 25, 2)
 
 
-plt.title('Black180', loc='left')
+# plt.title('Black180', loc='left')
+# plt.title('write')
 # draw_outer(0, 0, 200, 50)
 # draw_inner(0, 0, 200, 50, 100, 25, 4, 15)
 # draw_outer(2.1, -0, 60, 70)
@@ -185,8 +191,25 @@ plt.title('Black180', loc='left')
 # draw_outer(0, -2.6, 60, 60)
 # draw_inner(0, -2.6, 60, 60, 30, 20, 2)
 
-draw_outer(0, -0, 60, 60)
-draw_inner(0, -0, 60, 60, 30, 20, 2, 10)
+# draw_outer(0, -0, 60, 60)
+# draw_inner(0, -0, 60, 60, 30, 20, 2, 10)
+
+
+def get_datas_from_mysql(op):
+    """从数据库中获取参数."""
+    sql = 'select * from test.draws;'
+    datas = op.op_select(sql)
+    print(datas)
+    for _ in datas:
+        print('--:', _)
+        title, outer_width, outer_height, inner_width, inner_height, inner_type, offset = _.get('title'), _.get('outer_width'), _.get('outer_height'), _.get('inner_width'), _.get('inner_height'), _.get('inner_type'), _.get('offset')
+        draw_outer(0, 0, outer_width, outer_height)
+        draw_inner(0, 0, outer_width, outer_height, inner_width, inner_height, inner_type, offset)
+        plt.title(title, x=0-0.1, y = 0- 0.1)
+
+
+get_datas_from_mysql(op)
+
 plt.axis('equal')
 plt.axis('off')
 # plt.gcf().set_size_inches(20, 20)
